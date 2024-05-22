@@ -29,7 +29,7 @@ envelope_file=${envelope_files[0]}
 echo "Sending envelope: $envelope_file"
 
 curl -i -X POST \
-  -H 'Content-Type: application/json' \
+  -H 'Content-Type: application/x-sentry-envelope' \
   -H "X-Sentry-Auth: Sentry sentry_version=7, sentry_key=$SENTRY_KEY, sentry_client=raven-bash/0.1" \
   -d $envelope_file \
   https://$API_HOST/api/$PROJECT_ID/envelope/
