@@ -40,6 +40,4 @@ $ ./create-events.sh https://yourdsngoeshere 10
 $ ./send-event.sh <DSN>
 ```
 
-Assuming you give it a valid DSN, it will take the first event envelope it finds in the `./envelopes` folder and send this using the Sentry CLI.
-
-Alternatively, you could mimic that behaviour using cURL or some other mechanism.
+Assuming you give it a valid DSN, it will take the first event envelope it finds in the `./envelopes` folder and send this using cURL.

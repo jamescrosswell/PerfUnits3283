@@ -50,15 +50,21 @@ public sealed class InterceptingHttpTransport : HttpTransportBase, ITransport
             "./envelopes/",
             $"{fileName}{Guid.NewGuid().GetHashCode() % 10_000_000}.envelope");
         Console.WriteLine("Storing file {0}.", envelopeFilePath);
-        var stream = File.Create(envelopeFilePath);
+        // We need a memory stream since the envelope header won't include a time sent when
+        // serialising to a file stream
+        using var memoryStream = new MemoryStream();
         try
         {
-            envelope.Serialize(stream, null);
+            envelope.Serialize(memoryStream, null);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            using FileStream file = new FileStream(envelopeFilePath, FileMode.Create, FileAccess.Write);
+            memoryStream.WriteTo(file);
         }
         finally
         {
-            stream.Close();
+            memoryStream.Close();
         }
+
         Console.WriteLine("File stored: {0}.", envelopeFilePath);
     }    
 }

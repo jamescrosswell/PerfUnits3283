@@ -11,19 +11,28 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-# Sentry DSN passed as a parameter
-export SENTRY_DSN=$1
+# Extract the Sentry key, API host, and project ID from the DSN
+SENTRY_KEY=$(echo $1 | cut -d'/' -f3 | cut -d'@' -f1)
+API_HOST=$(echo $1 | cut -d'@' -f2 | cut -d'/' -f1)
+PROJECT_ID=$(echo $1 | cut -d'/' -f4)
+
+echo "Sentry Key: $SENTRY_KEY"
+echo "API Host: $API_HOST"
+echo "Project ID: $PROJECT_ID"
 
 # Directory where the envelopes are located
 dir="./envelopes"
 
 # Get an envelope to send
 envelope_files=($(ls $dir/${envelope_type}*.envelope 2> /dev/null))
-
 envelope_file=${envelope_files[0]}
+echo "Sending envelope: $envelope_file"
 
-# Send the envelope
-sentry-cli send-envelope --raw $envelope_file
+curl -i -X POST \
+  -H 'Content-Type: application/json' \
+  -H "X-Sentry-Auth: Sentry sentry_version=7, sentry_key=$SENTRY_KEY, sentry_client=raven-bash/0.1" \
+  -d $envelope_file \
+  https://$API_HOST/api/$PROJECT_ID/envelope/
 
 # Delete the envelope
 rm $envelope_file

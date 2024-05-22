@@ -8,12 +8,12 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
-<!--    <ItemGroup>-->
-<!--      <ProjectReference Include="..\..\sentry-dotnet\src\Sentry\Sentry.csproj" />-->
-<!--    </ItemGroup>-->
-
     <ItemGroup>
-      <PackageReference Include="Sentry" Version="4.6.2" />
+      <ProjectReference Include="..\..\sentry-dotnet\src\Sentry\Sentry.csproj" />
     </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <PackageReference Include="Sentry" Version="4.6.2" />-->
+<!--    </ItemGroup>-->
 
 </Project>
