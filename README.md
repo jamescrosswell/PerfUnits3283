@@ -2,7 +2,7 @@
  
 This repository contains:
 1. `create-events.sh` - a bash script that creates valid envelopes in the `./envelopes` directory
-2. `send-event.sh` - a bash script that will send one of the envelopes using the `sentry-cli`. 
+2. `send-event.sh` - a bash script that will send one of the envelopes using cURL. 
 
 ## Pre-requisites
 
@@ -20,7 +20,7 @@ $ ./create-events.sh <DSN>
 
 This will run a program that loops, sending 90 transactions to the Sentry DSN provided. It will also create an `./envelopes` directory and create 10 envelopes containing errors, which can then be sent manually/separately (see below). 
 
-**Important Note:** The DSN should be that of a project that has no remaining Performance unit quota, so that relevant rate limit headers are returned for the first requests(s). That ensures envelope items covered by such rate limit headers get removed from any envelopes being created for exceptions. [See here](https://github.com/getsentry/sentry-dotnet/blob/main/src/Sentry/Http/HttpTransportBase.cs#L97-L99) for detail.
+**Important Note:** The DSN should be that of a project that has no remaining Performance unit quota.
 
 #### Controlling the number of events to be sent
 
