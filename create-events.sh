@@ -12,4 +12,5 @@ fi
 num_events=${2:-100}
 
 # Use dotnet to create some events. 25% will be exceptions and 75% will be transactions
+dotnet restore 
 dotnet run --project PerfUnits3283/PerfUnits3283.csproj --dsn $1  --events $num_events
