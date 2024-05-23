@@ -34,7 +34,9 @@ SentrySdk.Init(options =>
     options.AutoSessionTracking = true;
     options.IsGlobalModeEnabled = true;
     options.EnableTracing = true;
-    options.Transport = new InterceptingHttpTransport(options, new HttpClient());
+    options.Transport = new LoggingHttpTransport(options);
+    // options.Transport = new CurlTransport(options);
+    // options.Transport = new InterceptingHttpTransport(options, new HttpClient());
 });
 
 Directory.CreateDirectory(Path.Combine("./envelopes/"));

@@ -28,11 +28,10 @@ envelope_files=($(ls $dir/${envelope_type}*.envelope 2> /dev/null))
 envelope_file=${envelope_files[0]}
 echo "Sending envelope: $envelope_file"
 
-curl -i -X POST \
+curl -i -X "POST" "https://$API_HOST/api/$PROJECT_ID/envelope/"\
   -H 'Content-Type: application/x-sentry-envelope' \
   -H "X-Sentry-Auth: Sentry sentry_version=7, sentry_key=$SENTRY_KEY, sentry_client=raven-bash/0.1" \
-  -d $envelope_file \
-  https://$API_HOST/api/$PROJECT_ID/envelope/
+  -d @$envelope_file
 
 # Delete the envelope
-rm $envelope_file
+#rm $envelope_file
